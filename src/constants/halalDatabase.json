@@ -1,0 +1,83 @@
+{
+  "rules": [
+    {
+      "id": "RULE_HARAM_INGREDIENT",
+      "condition": "Product contains any ingredient from the haram_ingredients list.",
+      "result": "Haram",
+      "description": "If the product contains explicitly prohibited ingredients like pork derivatives or alcohol, it is considered Haram."
+    },
+    {
+      "id": "RULE_HALAL_CERTIFIED",
+      "condition": "Product has a recognized Halal certification.",
+      "result": "Halal",
+      "description": "If the product is certified by a recognized Halal authority, it overrides doubtful ingredients and is considered Halal."
+    },
+    {
+      "id": "RULE_MUSHBOOH_INGREDIENT",
+      "condition": "Product contains ingredients from the mushbooh_ingredients list and is NOT Halal certified.",
+      "result": "Mushbooh",
+      "description": "Ingredients that could be derived from either animal or plant sources (like generic glycerin or gelatin) make the product doubtful unless certified."
+    },
+    {
+      "id": "RULE_SAFE_DEFAULT",
+      "condition": "Product contains only universally safe (Halal) ingredients and no Mushbooh/Haram ingredients.",
+      "result": "Halal",
+      "description": "If all ingredients are naturally Halal (e.g., water, salt, pure plant derivatives) and there's no contamination, it is Halal."
+    }
+  ],
+  "haram_ingredients": [
+    "pork",
+    "bacon",
+    "ham",
+    "lard",
+    "pork fat",
+    "alcohol",
+    "ethanol",
+    "liquor",
+    "wine",
+    "beer",
+    "rum",
+    "carmine",
+    "cochineal",
+    "E120",
+    "pepsin",
+    "rennet (animal derived, non-halal slaughtered)"
+  ],
+  "mushbooh_ingredients": [
+    "gelatin",
+    "glycerin",
+    "glycerol",
+    "E422",
+    "emulsifiers",
+    "E471",
+    "E472",
+    "whey",
+    "rennet",
+    "enzymes",
+    "shortening",
+    "stearic acid",
+    "tallow",
+    "vanilla extract",
+    "artificial flavors",
+    "natural flavors"
+  ],
+  "halal_certifications": [
+    "JAKIM (Malaysia)",
+    "MUI (Indonesia)",
+    "MUIS (Singapore)",
+    "IFANCA (USA)",
+    "ISWA (USA)",
+    "HMC (UK)",
+    "HFA (UK)",
+    "Halal Food Council of Europe",
+    "FIANZ (New Zealand)",
+    "SGS Halal"
+  ],
+  "logic_examples": [
+    "IF ingredient IN haram_ingredients THEN status = 'Haram'",
+    "IF certification IN halal_certifications THEN status = 'Halal'",
+    "IF ingredient == 'lard' THEN status = 'Haram'",
+    "IF ingredient == 'gelatin' AND certification NOT IN halal_certifications AND origin != 'plant' AND origin != 'fish' THEN status = 'Mushbooh'",
+    "IF ingredient == 'ethanol' AND amount > 0.1% THEN status = 'Haram' (Subject to specific madhab/fatwa)"
+  ]
+}
